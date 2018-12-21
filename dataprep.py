@@ -78,10 +78,10 @@ def get_img_array(myzipfile, imgid, shape=(299,299)):
 def prep_train_data(data_list, batch_size=5, shape=(299,299,3), augment=False):
     while True:
         random_indexes = np.random.choice(len(data_list), size=batch_size)
-        batch_img = np.zeros(shape+(batch_size,))
-        batch_labels = np.zeros((len(data_list), 28))
+        batch_img = np.zeros((batch_size,) + shape)
+        batch_labels = np.zeros((batch_size, 28))
         for pos, i in enumerate(random_indexes):
             img = get_img_array(trainzip, data_list.iloc[i,0], (shape[0], shape[1]))
             batch_img[pos] = img
-            batch_labels[pos] = data_list.iloc[i]
-            yield batch_img, batch_labels
+            batch_labels[pos] = data_list.iloc[i,1:]
+        yield batch_img, batch_labels

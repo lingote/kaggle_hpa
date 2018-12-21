@@ -1,9 +1,12 @@
 import tensorflow as tf
 import numpy as np
+import tensornets as tnets
 from dataprep import get_data, get_img_array
 
 def create_model(input_img, n_out):
     layer_name = 'final_layer_ops'
+    inputs = tf.placeholder(tf.float32, [None, 299,299,3])
+    outputs = tf.placeholder(tf.float32, [None, 28])
     with tf.name_scope(layer_name):
         with tf.name_scope('dense_layer'):
             logits = tf.layers.dense(input_img, n_out,
